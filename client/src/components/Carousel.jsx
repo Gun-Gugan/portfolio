@@ -7,7 +7,6 @@ import "swiper/css/pagination";
 import zomatoImg from "../assets/projects/zomato1.png";
 import portfolioImg from "../assets/projects/portfolio.png";
 import calculatorImg from "../assets/projects/calculator.png";
-import zomato2Img from "../assets/projects/zomato2.png";
 import clockImg from "../assets/projects/clock.png";
 import popupImg from "../assets/projects/popup.png";
 import webpageImg from "../assets/projects/webpage.png";
@@ -18,7 +17,7 @@ const projects = [
   {
     id: 1,
     title: "Delivery app with login verification",
-    image: zomatoImg, 
+    image: zomatoImg,
     link: "https://zomato-clone-client.onrender.com",
   },
   {
@@ -33,7 +32,7 @@ const projects = [
     image: calculatorImg,
     link: "https://gun-gugan.github.io/Calculator/",
   },
-   {
+  {
     id: 4,
     title: "Resume Maker",
     image: ResumeMakerImg,
@@ -57,12 +56,12 @@ const projects = [
     image: webpageImg,
     link: "https://gun-gugan.github.io/Projects",
   },
-  
+
 ];
 
 const Carousel = () => {
   return (
-    <section className="mt-20 px-4">
+    <section id="projects" className="mt-20 px-4">
       <h2 className="text-4xl font-bold text-center text-white mb-10">
         <span className="text-blue-500">My</span> Projects
       </h2>
