@@ -42,11 +42,10 @@ app.use((err, req, res, next) => {
 app.use(express.json());
 
 // MongoDB connection
-mongoose.connect(process.env.MONGODB_URI, {
-  dbName: 'portfolio',
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).catch(() => {});
+mongoose.connect(process.env.MONGODB_URI, { dbName: 'portfolio' })
+  .catch((err) => {
+    throw new Error(`MongoDB connection failed: ${err.message}`);
+  });
 
 // API route
 app.use('/api/messages', messageRoutes);
