@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 
 function Header() {
   return (
-    <section className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-950 to-gray-900 px-4 py-10">
+    <section section id="about" className="min-h-screen flex items-center justify-center bg-gradient-to-r from-blue-950 to-gray-900 px-4 py-10">
       <motion.div
         initial={{ opacity: 0, y: 30 }}
         animate={{ opacity: 1, y: 0 }}
