@@ -15,30 +15,35 @@ const allowedOrigins = [
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
       }
     },
-    methods: ['POST'],
+    methods: ['GET', 'POST'],
     credentials: true,
   })
 );
 
 app.use(express.json());
 
-// Optional request logger removed
+mongoose.connect(process.env.MONGODB_URI, { dbName: 'portfolio' }).catch(() => {});
 
-mongoose
-  .connect(process.env.MONGODB_URI, { dbName: 'portfolio' })
-  .catch(() => {}); // silently catch error, or handle via monitoring system
+//  Serve favicon placeholder
+app.get('/favicon.ico', (req, res) => res.status(204).end());
 
+//  API routes
 app.use('/api/messages', messageRoutes);
 
+//  Health route
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
+});
+
+//  Root route
+app.get('/', (req, res) => {
+  res.send('Portfolio backend is running.');
 });
 
 const PORT = process.env.PORT || 5000;
