@@ -11,19 +11,21 @@ const app = express();
 // Allowed frontend origins (no trailing slash)
 const allowedOrigins = [
   process.env.FRONTEND_URL || 'http://localhost:5173',
-];
+  'https://portfolio-client-xj4n.onrender.com', 
+].filter(Boolean); 
 
 // CORS configuration
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin || allowedOrigins.some(allowed => origin.startsWith(allowed))) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
       }
     },
-    methods: ['GET', 'POST'],
+    methods: ['GET', 'POST', 'OPTIONS'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true,
   })
 );
@@ -59,7 +61,7 @@ app.get('/', (req, res) => {
   res.send('Portfolio backend is running.');
 });
 
-// Favicon handler to avoid warnings
+// Favicon handler
 app.get('/favicon.ico', (req, res) => res.status(204).end());
 
 // Start the server
