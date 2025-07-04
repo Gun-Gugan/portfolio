@@ -8,15 +8,16 @@ dotenv.config();
 
 const app = express();
 
+// Allowed origins
 const allowedOrigins = [
-  process.env.FRONTEND_URL || 'https://portfolio-client-xj4n.onrender.com/',
+  process.env.FRONTEND_URL || 'http://localhost:5173',
 ];
 
+// CORS configuration
 app.use(
   cors({
     origin: (origin, callback) => {
-      if (!origin) return callback(null, true);
-      if (allowedOrigins.includes(origin)) {
+      if (!origin || allowedOrigins.includes(origin)) {
         callback(null, true);
       } else {
         callback(new Error('Not allowed by CORS'));
@@ -29,17 +30,17 @@ app.use(
 
 app.use(express.json());
 
-// Optional request logger removed
+// MongoDB connection
+mongoose.connect(process.env.MONGODB_URI, { dbName: 'portfolio' }).catch(() => {});
 
-mongoose
-  .connect(process.env.MONGODB_URI, { dbName: 'portfolio' })
-  .catch(() => {}); // silently catch error, or handle via monitoring system
-
+// Routes
 app.use('/api/messages', messageRoutes);
 
+// Health check
 app.get('/api/health', (req, res) => {
   res.status(200).json({ status: 'OK' });
 });
 
+// Start server
 const PORT = process.env.PORT || 5000;
 app.listen(PORT);
