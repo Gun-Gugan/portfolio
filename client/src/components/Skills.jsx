@@ -47,14 +47,15 @@ const Skills = () => {
       <Swiper
         modules={[Autoplay]}
         spaceBetween={20}
-        slidesPerView={3}
+        slidesPerView={2} // Reduced for mobile to give more space per slide
         autoplay={{ delay: 0, disableOnInteraction: false }}
         speed={3000}
         loop={true}
         breakpoints={{
-          640: { slidesPerView: 3 },
-          768: { slidesPerView: 4 },
-          1024: { slidesPerView: 6 },
+          320: { slidesPerView: 2, spaceBetween: 10 }, // Adjusted for very small screens
+          640: { slidesPerView: 3, spaceBetween: 15 },
+          768: { slidesPerView: 4, spaceBetween: 20 },
+          1024: { slidesPerView: 6, spaceBetween: 20 },
         }}
         className="mt-10 max-w-5xl mx-auto"
       >
@@ -65,10 +66,12 @@ const Skills = () => {
               whileInView={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.4, delay: index * 0.1 }}
               viewport={{ once: true }}
-              className={`bg-gray-900 px-6 py-4 rounded-xl text-white text-lg font-medium shadow-md flex flex-col items-center gap-2 transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:${skills[index].glow}`}
+              className={`bg-gray-900 px-4 py-4 rounded-xl text-white font-medium shadow-md flex flex-col items-center gap-2 transform transition-all duration-300 hover:scale-105 hover:shadow-xl hover:${skills[index].glow} w-full max-w-[150px]`}
             >
-              <span className={`text-5xl ${skills[index].color}`}>{skill.icon}</span>
-              <span className="mt-1">{skill.name}</span>
+              <span className={`text-4xl sm:text-5xl ${skills[index].color}`}>{skill.icon}</span>
+              <span className="mt-1 text-sm sm:text-base text-center truncate max-w-full">
+                {skill.name}
+              </span>
             </motion.div>
           </SwiperSlide>
         ))}
