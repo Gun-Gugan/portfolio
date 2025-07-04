@@ -7,7 +7,7 @@ function Contact() {
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [status, setStatus] = useState('');
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [submitted, setSubmitted] = useState(false); //   new state
+  const [submitted, setSubmitted] = useState(false);
 
   const handleChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -16,7 +16,6 @@ function Contact() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     setIsSubmitting(true);
-    setStatus('Sending...');
 
     try {
       const response = await axios.post(
@@ -25,13 +24,13 @@ function Contact() {
         { timeout: 60000 }
       );
       setStatus('Message sent successfully!');
-      setSubmitted(true); //   show thank you message
+      setSubmitted(true); 
 
       setTimeout(() => {
         setFormData({ name: '', email: '', message: '' });
         setIsSubmitting(false);
         setStatus('');
-        setSubmitted(false); //   optional: reset form after few seconds
+        setSubmitted(false); 
       }, 5000);
     } catch (error) {
       setStatus(

@@ -9,10 +9,10 @@ dotenv.config();
 
 const router = express.Router();
 
-// Rate limiter (increased max for testing)
+// Rate limiter
 const messageLimiter = rateLimit({
   windowMs: 15 * 60 * 1000, // 15 minutes
-  max: 100, // Increased for testing
+  max: 100,
   message: 'Too many requests from this IP, please try again after 15 minutes.',
 });
 
@@ -33,10 +33,8 @@ const validateMessage = [
 ];
 
 router.post('/', messageLimiter, validateMessage, async (req, res) => {
-  console.log('Received POST /api/messages:', req.body);
   const errors = validationResult(req);
   if (!errors.isEmpty()) {
-    console.log('Validation errors:', errors.array());
     return res.status(400).json({ message: errors.array()[0].msg });
   }
 
@@ -44,10 +42,8 @@ router.post('/', messageLimiter, validateMessage, async (req, res) => {
 
   try {
     // Save to MongoDB
-    console.log('Saving message to MongoDB');
     const newMessage = new Message({ name, email, message });
     await newMessage.save();
-    console.log('Message saved successfully');
 
     // Send email
     const mailOptions = {
@@ -57,13 +53,10 @@ router.post('/', messageLimiter, validateMessage, async (req, res) => {
       text: `Name: ${name}\nEmail: ${email}\nMessage: ${message}`,
     };
 
-    console.log('Sending email...');
     await transporter.sendMail(mailOptions);
-    console.log('Email sent successfully');
 
     res.status(200).json({ message: 'Message sent successfully' });
   } catch (error) {
-    console.error('Error in /api/messages:', error);
     res.status(500).json({ message: `Failed to send message: ${error.message}` });
   }
 });
