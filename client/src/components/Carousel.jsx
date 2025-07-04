@@ -4,6 +4,7 @@ import { Navigation, Pagination, Autoplay } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import "swiper/css/pagination";
+
 import zomatoImg from "../assets/projects/zomato1.png";
 import portfolioImg from "../assets/projects/portfolio.png";
 import calculatorImg from "../assets/projects/calculator.png";
@@ -11,7 +12,6 @@ import clockImg from "../assets/projects/clock.png";
 import popupImg from "../assets/projects/popup.png";
 import webpageImg from "../assets/projects/webpage.png";
 import ResumeMakerImg from "../assets/projects/ResumeMakerImg.png";
-
 
 const projects = [
   {
@@ -24,7 +24,7 @@ const projects = [
     id: 2,
     title: "Portfolio Website",
     image: portfolioImg,
-    link: "https://your-portfolio-site.com",
+    link: "https://portfolio-client-xj4n.onrender.com",
   },
   {
     id: 3,
@@ -56,7 +56,6 @@ const projects = [
     image: webpageImg,
     link: "https://gun-gugan.github.io/Projects",
   },
-
 ];
 
 const Carousel = () => {
@@ -93,18 +92,27 @@ const Carousel = () => {
                 alt={project.title}
                 className="w-full h-64 object-cover group-hover:scale-105 transition-transform duration-300"
               />
-              <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 flex flex-col justify-end p-4">
-                <h3 className="text-xl font-semibold text-white">{project.title}</h3>
-                <a
-                  href={project.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  aria-label={`View ${project.title} project`}
-                  className="mt-2 inline-block text-sm text-blue-400 hover:underline"
-                >
-                  View Project →
-                </a>
+
+              {/* Hover Overlay with Title */}
+              <div className="absolute inset-0 bg-black bg-opacity-40 opacity-0 group-hover:opacity-100 transition duration-300 flex items-center justify-center">
+                <h3 className="text-xl font-semibold text-white text-center px-2 animate-fadeIn">
+                  {project.title}
+                </h3>
               </div>
+
+              {/* Always Visible Project Link */}
+              <a
+                href={project.link}
+                target="_blank"
+                rel="noopener noreferrer"
+                aria-label={`View ${project.title} project`}
+className="absolute bottom-7 left-1/2 transform -translate-x-1/2 bg-blue-600 hover:bg-black text-white hover:text-blue-600 px-6 py-1 rounded-md text-sm font-semibold shadow-md transition-all duration-300 text-center opacity-60 hover:opacity-100"
+
+
+
+              >
+                View Project →
+              </a>
             </div>
           </SwiperSlide>
         ))}
